@@ -1,14 +1,10 @@
 import Image from "next/image";
-import { hygraphClient } from "@/lib/client";
-import { GET_PROJECTS } from "@/lib/queries";
-import { PersonalProject } from "@/lib/types";
+import { sdk } from "@/lib/client";
 
 const Home = async () => {
-  const { personalProjects } = await hygraphClient.request<{
-    personalProjects: PersonalProject[];
-  }>(GET_PROJECTS);
+  const {data} = await sdk.Exercises()
 
-  console.log(personalProjects)
+  console.log(data)
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
