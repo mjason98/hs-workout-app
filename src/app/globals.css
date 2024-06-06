@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-yoga {
+    position: relative;
+    z-index: 1; /* Ensures the content stays above the pseudo-element */
+}
+
+.bg-yoga::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/yogabg.jpg');
+    background-repeat: repeat;
+    background-size: 900px 900px;
+    opacity: 0.1; /* Sets the opacity to 0.8 */
+    z-index: -1; /* Ensures the background image stays behind the content */
+}
