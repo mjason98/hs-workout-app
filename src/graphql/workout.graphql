@@ -11,6 +11,9 @@ query Workout($id: ID!) {
       name
       duration
       repetition
+      image {
+        url
+      }
     }
   }
 }

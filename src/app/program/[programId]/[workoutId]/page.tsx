@@ -52,7 +52,7 @@ const ArticlePage: React.FC<WorkoutPageProps> = async ({
       >
         {data.workout?.name}
       </div>
-      <Link  href={`/run/${workoutId}`} className="flex items-center justify-center  hover:bg-green-200 hover:text-green-500 hover:border-green-500 text-green-700 border-4 border-green-700 text-3xl bg-green-300 p-5 rounded-full w-[100px] h-[100px]">
+      <Link  href={`/run/${workoutId}`} className="flex items-center justify-center  hover:bg-green-200 hover:text-green-500 hover:border-green-500 text-green-700 border-b-8 border-green-700 text-3xl bg-green-300 p-5 rounded-full w-[100px] h-[100px]">
         Start
       </Link>
 
