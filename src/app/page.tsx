@@ -3,7 +3,7 @@ import { pacifico } from "./fonts/default";
 
 const Home = () => {
   return (
-    <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-center p-7 w-screen max-w-[400px]">
+    <main className="bg-yoga-o flex min-h-screen flex-col gap-[90px] items-center justify-center p-7 w-screen max-w-[400px]">
       <div className={"text-8xl text-gray-800 " + pacifico.className}>
         Zenitica
       </div>

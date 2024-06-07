@@ -2,6 +2,13 @@ import { sdk } from "@/lib/client";
 import Link from "next/link";
 import { pacifico } from "../fonts/default";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Zenitica Programs",
+  description: "The Workout app. Programs Page.",
+};
+
 const PlansPage = async () => {
   const { data } = await sdk.Programs();
 

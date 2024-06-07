@@ -3,6 +3,12 @@ import { pacifico } from "@/app/fonts/default";
 import Carrousel from "@/components/Carrousel";
 import { Exercise } from "@/generated/graphql";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Zenitica Run Workout",
+  description: "The Workout app. Run Page.",
+};
 
 type RunPageProps = {
   params: {

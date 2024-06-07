@@ -3,6 +3,13 @@ import Link from "next/link";
 import { pacifico } from "@/app/fonts/default";
 import Image from "next/image";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Zenitica Single Workout",
+  description: "The Workout app. Single Workout Page.",
+};
+
 type WorkoutPageProps = {
   params: {
     workoutId: string;

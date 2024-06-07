@@ -5,6 +5,13 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Zenitica Exercise Detail",
+  description: "The Workout app. Exercise Detail Page.",
+};
+
 type ExercisePageProps = {
   params: {
     exerciseId: string;

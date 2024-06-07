@@ -2,13 +2,20 @@ import { sdk } from "@/lib/client";
 import Link from "next/link";
 import { pacifico } from "@/app/fonts/default";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Zenitica Workout",
+  description: "The Workout app. Workout Page.",
+};
+
 type PlanPageProps = {
   params: {
     programId: string;
   };
 };
 
-const ArticlePage: React.FC<PlanPageProps> = async ({
+const WorkoutPage: React.FC<PlanPageProps> = async ({
   params: { programId },
 }) => {
   const { data } = await sdk.Program({ id: programId });
@@ -42,4 +49,4 @@ const ArticlePage: React.FC<PlanPageProps> = async ({
   );
 };
 
-export default ArticlePage;
+export default WorkoutPage;

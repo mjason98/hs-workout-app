@@ -2,6 +2,13 @@ import { pacifico } from "@/app/fonts/default";
 import { faFire } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Zenitica Finish",
+  description: "The Workout app. Finish Workout Page.",
+};
+
 type FinishProps = {
   params: {
     workoutId: string;
