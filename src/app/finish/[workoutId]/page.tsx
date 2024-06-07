@@ -1,20 +1,16 @@
-import { sdk } from "@/lib/client";
 import { pacifico } from "@/app/fonts/default";
-import Carrousel from "@/components/Carrousel";
-import { Exercise } from "@/generated/graphql";
+import { faFire } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
-type RunPageProps = {
+type FinishProps = {
   params: {
     workoutId: string;
   };
 };
 
-const RunWorkoutPage: React.FC<RunPageProps> = async ({
+const RunWorkoutPage: React.FC<FinishProps> = async ({
   params: { workoutId },
 }) => {
-  const { data } = await sdk.Workout({ id: workoutId });
-
 
   return (
     <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-start p-7 w-screen max-w-[400px]">
@@ -24,9 +20,11 @@ const RunWorkoutPage: React.FC<RunPageProps> = async ({
           pacifico.className
         }
       >
-        {data.workout?.name}
+        Finished !
       </div>
-      <Carrousel exercises={data.workout?.exercises as Exercise[] || []} workoutId={workoutId}/>
+      <div className="text-3xl p-3 text-center">
+        You  have finish a full workout. Congrats <FontAwesomeIcon icon={faFire} className="w-[20px] text-rose-600"/> 
+      </div>
     </main>
   );
 };

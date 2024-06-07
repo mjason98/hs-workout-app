@@ -43,7 +43,7 @@ const ArticlePage: React.FC<WorkoutPageProps> = async ({
   );
 
   return (
-    <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-start p-7">
+    <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-start p-7 w-screen max-w-[400px]">
       <div
         className={
           "text-6xl text-center text-gray-700 leading-relaxed h-fit " +

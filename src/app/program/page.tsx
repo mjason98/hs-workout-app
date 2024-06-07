@@ -6,7 +6,7 @@ const PlansPage = async () => {
   const { data } = await sdk.Programs();
 
   return (
-    <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-start p-7">
+    <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-start p-7 w-screen max-w-[400px]">
       <div className={"text-6xl text-gray-700 " + pacifico.className}>
         {" "}
         Programs{" "}

@@ -10,9 +10,11 @@ import "slick-carousel/slick/slick-theme.css";
 import { Exercise } from "@/generated/graphql";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { useRouter } from 'next/navigation';
 
 type CarrouseProps = {
   exercises: Exercise[];
+  workoutId: string;
 };
 
 const getTime = (ex:Exercise) => {
@@ -23,10 +25,11 @@ const getTime = (ex:Exercise) => {
   return newtimeFixed*60*times;
 }
 
-const Carrousel: React.FC<CarrouseProps> = ({ exercises }) => {
+const Carrousel: React.FC<CarrouseProps> = ({ exercises, workoutId }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [timeLeft, setTimeLeft] = useState(getTime(exercises[0]));
   const sliderRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -34,8 +37,11 @@ const Carrousel: React.FC<CarrouseProps> = ({ exercises }) => {
         const prevTimeLeftFixed = prevTimeLeft?prevTimeLeft:0;
         if (prevTimeLeftFixed <= 1) {
           if (currentSlide < exercises.length - 1) {
-            sliderRef.current.slickGoTo(currentSlide+1);// slickNext();
+            sliderRef.current.slickGoTo(currentSlide+1);
             setCurrentSlide(currentSlide+1);
+          } else {
+            // finish
+            router.push(`/finish/${workoutId}`);
           }
 
           return getTime(exercises[currentSlide + 1]);
