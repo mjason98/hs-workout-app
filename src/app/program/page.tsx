@@ -24,10 +24,10 @@ const PlansPage = async () => {
             <Link
               key={p.id}
               href={`/program/${p.id}`}
-              className="button-with-bg flex flex-col items-center justify-begin min-h-[200px]"
+              className="button-with-bg flex flex-col items-center justify-begin min-h-[150px]"
               style={{ backgroundImage: `url(${p.image?.url})` }}
             >
-              <div className="bg-gray-800 text-gray-100 text-3xl p-4 rounded-xl">{p.name}</div>
+              <div className="bg-gray-800 text-gray-100 text-2xl p-4 rounded-xl">{p.name}</div>
               
             </Link>
           );

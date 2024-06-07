@@ -29,4 +29,4 @@ npm run codegen
 
 ## Vercel 
 
-Check the vercel [deploied app here](https://hs-workout-app.vercel.app/)
+Check the vercel [deployed app here](https://hs-workout-app.vercel.app/)

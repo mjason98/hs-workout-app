@@ -36,10 +36,10 @@ const WorkoutPage: React.FC<PlanPageProps> = async ({
             <Link
               key={w.id}
               href={`/program/${programId}/${w.id}`}
-              className="button-with-bg flex flex-col items-center justify-begin min-h-[200px] w-full"
+              className="button-with-bg flex flex-col items-center justify-begin min-h-[150px] w-full"
               style={{ backgroundImage: `url(${w.image?.url})`, borderColor:`rgb(136, 19, 55)` }}
             >
-              <div className="bg-rose-900 text-rose-50 text-3xl p-4 rounded-xl">{w.name}</div>
+              <div className="bg-rose-900 text-rose-50 text-2xl p-4 rounded-xl">{w.name}</div>
               
             </Link>
           );
