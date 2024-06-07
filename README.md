@@ -26,3 +26,7 @@ We use `graphql` and **Hygraph**. For new query or mutation operations, remember
 ```shell
 npm run codegen
 ```
+
+## Vercel 
+
+Check the vercel [deploied app here](https://hs-workout-app.vercel.app/)
