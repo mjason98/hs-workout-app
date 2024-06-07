@@ -34,7 +34,8 @@ const Carrousel: React.FC<CarrouseProps> = ({ exercises }) => {
         const prevTimeLeftFixed = prevTimeLeft?prevTimeLeft:0;
         if (prevTimeLeftFixed <= 1) {
           if (currentSlide < exercises.length - 1) {
-            sliderRef.current.slickNext();
+            sliderRef.current.slickGoTo(currentSlide+1);// slickNext();
+            setCurrentSlide(currentSlide+1);
           }
 
           return getTime(exercises[currentSlide + 1]);
@@ -46,17 +47,13 @@ const Carrousel: React.FC<CarrouseProps> = ({ exercises }) => {
     return () => clearInterval(timer);
   }, [currentSlide, exercises]);
 
-  const handleExChange = (next:number) => {
-    setCurrentSlide(next)
-  }
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    beforeChange: (current:number, next:number) => handleExChange(next),
   };
 
   return (
@@ -75,6 +72,8 @@ const Carrousel: React.FC<CarrouseProps> = ({ exercises }) => {
                 image={e.image?.url || ""}
                 duration={e.duration || 0}
                 repetition={e.repetition || 0}
+                current={currentSlide}
+                index={index}
               />
             );
           })}
