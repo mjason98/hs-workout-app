@@ -1,0 +1,15 @@
+query Exercise($id: ID!) {
+  exercise(where: {id: $id}) {
+    id
+    name
+    image {
+      url
+      width
+      height
+    }
+    videoUrl
+    repetition
+    duration
+    desc
+  }
+}

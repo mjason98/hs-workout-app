@@ -41,15 +41,6 @@ const ArticlePage: React.FC<WorkoutPageProps> = async ({
       className="w-[40px]"
     />
   );
-  const singleC = (
-    <Image
-      src={"/path3.png"}
-      width="200"
-      height="200"
-      alt=""
-      className="w-[40px]"
-    />
-  );
 
   return (
     <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-start p-7">

@@ -9036,6 +9036,13 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
+export type ExerciseQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ExerciseQuery = { __typename?: 'Query', exercise?: { __typename?: 'Exercise', id: string, name?: string | null, videoUrl?: string | null, repetition?: number | null, duration?: number | null, desc?: string | null, image?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null } | null };
+
 export type ProgramQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -9056,6 +9063,23 @@ export type WorkoutQueryVariables = Exact<{
 export type WorkoutQuery = { __typename?: 'Query', workout?: { __typename?: 'Workout', id: string, name?: string | null, type?: string | null, image?: { __typename?: 'Asset', url: string } | null, exercises: Array<{ __typename?: 'Exercise', id: string, name?: string | null, duration?: number | null, repetition?: number | null }> } | null };
 
 
+export const ExerciseDocument = gql`
+    query Exercise($id: ID!) {
+  exercise(where: {id: $id}) {
+    id
+    name
+    image {
+      url
+      width
+      height
+    }
+    videoUrl
+    repetition
+    duration
+    desc
+  }
+}
+    `;
 export const ProgramDocument = gql`
     query Program($id: ID!) {
   program(where: {id: $id}) {
@@ -9107,11 +9131,15 @@ export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, str
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType, _variables) => action();
+const ExerciseDocumentString = print(ExerciseDocument);
 const ProgramDocumentString = print(ProgramDocument);
 const ProgramsDocumentString = print(ProgramsDocument);
 const WorkoutDocumentString = print(WorkoutDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    Exercise(variables: ExerciseQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ExerciseQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<ExerciseQuery>(ExerciseDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Exercise', 'query', variables);
+    },
     Program(variables: ProgramQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ProgramQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<ProgramQuery>(ProgramDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Program', 'query', variables);
     },
