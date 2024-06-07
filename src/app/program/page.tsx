@@ -1,19 +1,33 @@
-// import { sdk } from "@/lib/client";
+import { sdk } from "@/lib/client";
 import Link from "next/link";
+import { pacifico } from "../fonts/default";
 
 const PlansPage = async () => {
-  const plans = [{name:'plan1', id:'a'}, {name:'plan2', id:'b'}]
+  const { data } = await sdk.Programs();
 
   return (
-    <main className="flex min-h-screen flex-col gap-10 items-center justify-start p-10">
-      <div className="text-6xl">Plans</div>
-      <div className="flex flex-col gap-7 p-3 w-full">
-        {plans.map((p)=>{
-            return(<Link key={p.id} href={`/program/${p.id}`} className="p-4 bg-gray-300 rounded-lg" >{p.name} - image</Link>);
+    <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-start p-7">
+      <div className={"text-6xl text-gray-700 " + pacifico.className}>
+        {" "}
+        Programs{" "}
+      </div>
+      <div className="flex flex-col items-center justify-center gap-7 p-3 w-full overflow-y-auto h-left">
+        {data.programs.map((p) => {
+          return (
+            <Link
+              key={p.id}
+              href={`/program/${p.id}`}
+              className="button-with-bg flex flex-col items-center justify-begin min-h-[200px]"
+              style={{ backgroundImage: `url(${p.image?.url})` }}
+            >
+              <div className="bg-gray-800 text-gray-100 text-3xl p-4 rounded-xl">{p.name}</div>
+              
+            </Link>
+          );
         })}
       </div>
     </main>
   );
-}
+};
 
 export default PlansPage;

@@ -79,7 +79,6 @@ export type Asset = Entity & Node & {
   upload?: Maybe<AssetUpload>;
   /** Get the url for the asset with provided transformations applied. */
   url: Scalars['String']['output'];
-  videoExercise: Array<Exercise>;
   /** The file width */
   width?: Maybe<Scalars['Float']['output']>;
 };
@@ -249,20 +248,6 @@ export type AssetUrlArgs = {
   transformation?: InputMaybe<AssetTransformationInput>;
 };
 
-
-/** Asset system model */
-export type AssetVideoExerciseArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<ExerciseOrderByInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ExerciseWhereInput>;
-};
-
 export type AssetConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
   position?: InputMaybe<ConnectPositionInput>;
@@ -294,7 +279,6 @@ export type AssetCreateInput = {
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
   uploadUrl?: InputMaybe<Scalars['String']['input']>;
-  videoExercise?: InputMaybe<ExerciseCreateManyInlineInput>;
 };
 
 export type AssetCreateLocalizationDataInput = {
@@ -441,9 +425,6 @@ export type AssetManyWhereInput = {
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
   upload?: InputMaybe<AssetUploadWhereInput>;
-  videoExercise_every?: InputMaybe<ExerciseWhereInput>;
-  videoExercise_none?: InputMaybe<ExerciseWhereInput>;
-  videoExercise_some?: InputMaybe<ExerciseWhereInput>;
 };
 
 export enum AssetOrderByInput {
@@ -502,7 +483,6 @@ export type AssetUpdateInput = {
   thumbnailPersonalProject?: InputMaybe<PersonalProjectUpdateManyInlineInput>;
   /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
   uploadUrl?: InputMaybe<Scalars['String']['input']>;
-  videoExercise?: InputMaybe<ExerciseUpdateManyInlineInput>;
 };
 
 export type AssetUpdateLocalizationDataInput = {
@@ -907,9 +887,6 @@ export type AssetWhereInput = {
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
   upload?: InputMaybe<AssetUploadWhereInput>;
-  videoExercise_every?: InputMaybe<ExerciseWhereInput>;
-  videoExercise_none?: InputMaybe<ExerciseWhereInput>;
-  videoExercise_some?: InputMaybe<ExerciseWhereInput>;
   width?: InputMaybe<Scalars['Float']['input']>;
   /** All values greater than the given value. */
   width_gt?: InputMaybe<Scalars['Float']['input']>;
@@ -1068,6 +1045,7 @@ export type Exercise = Entity & Node & {
   createdAt: Scalars['DateTime']['output'];
   /** User that created this document */
   createdBy?: Maybe<User>;
+  desc?: Maybe<Scalars['String']['output']>;
   /** Get the document in other stages */
   documentInStages: Array<Exercise>;
   duration?: Maybe<Scalars['Int']['output']>;
@@ -1081,6 +1059,7 @@ export type Exercise = Entity & Node & {
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
+  repetition?: Maybe<Scalars['Int']['output']>;
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
@@ -1088,7 +1067,7 @@ export type Exercise = Entity & Node & {
   updatedAt: Scalars['DateTime']['output'];
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
-  video?: Maybe<Asset>;
+  videoUrl?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -1142,13 +1121,6 @@ export type ExerciseUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-
-export type ExerciseVideoArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
-  locales?: InputMaybe<Array<Locale>>;
-  where?: InputMaybe<AssetSingleRelationWhereInput>;
-};
-
 export type ExerciseConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
   position?: InputMaybe<ConnectPositionInput>;
@@ -1169,11 +1141,13 @@ export type ExerciseConnection = {
 export type ExerciseCreateInput = {
   clwueq5q00ft006wa1zy0cg5q?: InputMaybe<WorkoutCreateManyInlineInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  desc?: InputMaybe<Scalars['String']['input']>;
   duration?: InputMaybe<Scalars['Int']['input']>;
   image?: InputMaybe<AssetCreateOneInlineInput>;
   name?: InputMaybe<Scalars['String']['input']>;
+  repetition?: InputMaybe<Scalars['Int']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  video?: InputMaybe<AssetCreateOneInlineInput>;
+  videoUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ExerciseCreateManyInlineInput = {
@@ -1225,6 +1199,25 @@ export type ExerciseManyWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  desc?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  desc_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  desc_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  desc_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  desc_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  desc_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  desc_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  desc_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  desc_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  desc_starts_with?: InputMaybe<Scalars['String']['input']>;
   documentInStages_every?: InputMaybe<ExerciseWhereStageInput>;
   documentInStages_none?: InputMaybe<ExerciseWhereStageInput>;
   documentInStages_some?: InputMaybe<ExerciseWhereStageInput>;
@@ -1298,6 +1291,21 @@ export type ExerciseManyWhereInput = {
   /** All values that are not contained in given list. */
   publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   publishedBy?: InputMaybe<UserWhereInput>;
+  repetition?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than the given value. */
+  repetition_gt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than or equal the given value. */
+  repetition_gte?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are contained in given list. */
+  repetition_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** All values less than the given value. */
+  repetition_lt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values less than or equal the given value. */
+  repetition_lte?: InputMaybe<Scalars['Int']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  repetition_not?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are not contained in given list. */
+  repetition_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
@@ -1317,12 +1325,32 @@ export type ExerciseManyWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
-  video?: InputMaybe<AssetWhereInput>;
+  videoUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  videoUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  videoUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  videoUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  videoUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  videoUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  videoUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  videoUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  videoUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  videoUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum ExerciseOrderByInput {
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
+  DescAsc = 'desc_ASC',
+  DescDesc = 'desc_DESC',
   DurationAsc = 'duration_ASC',
   DurationDesc = 'duration_DESC',
   IdAsc = 'id_ASC',
@@ -1331,16 +1359,22 @@ export enum ExerciseOrderByInput {
   NameDesc = 'name_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
+  RepetitionAsc = 'repetition_ASC',
+  RepetitionDesc = 'repetition_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC'
+  UpdatedAtDesc = 'updatedAt_DESC',
+  VideoUrlAsc = 'videoUrl_ASC',
+  VideoUrlDesc = 'videoUrl_DESC'
 }
 
 export type ExerciseUpdateInput = {
   clwueq5q00ft006wa1zy0cg5q?: InputMaybe<WorkoutUpdateManyInlineInput>;
+  desc?: InputMaybe<Scalars['String']['input']>;
   duration?: InputMaybe<Scalars['Int']['input']>;
   image?: InputMaybe<AssetUpdateOneInlineInput>;
   name?: InputMaybe<Scalars['String']['input']>;
-  video?: InputMaybe<AssetUpdateOneInlineInput>;
+  repetition?: InputMaybe<Scalars['Int']['input']>;
+  videoUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ExerciseUpdateManyInlineInput = {
@@ -1361,8 +1395,11 @@ export type ExerciseUpdateManyInlineInput = {
 };
 
 export type ExerciseUpdateManyInput = {
+  desc?: InputMaybe<Scalars['String']['input']>;
   duration?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  repetition?: InputMaybe<Scalars['Int']['input']>;
+  videoUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ExerciseUpdateManyWithNestedWhereInput = {
@@ -1440,6 +1477,25 @@ export type ExerciseWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  desc?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  desc_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  desc_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  desc_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  desc_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  desc_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  desc_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  desc_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  desc_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  desc_starts_with?: InputMaybe<Scalars['String']['input']>;
   documentInStages_every?: InputMaybe<ExerciseWhereStageInput>;
   documentInStages_none?: InputMaybe<ExerciseWhereStageInput>;
   documentInStages_some?: InputMaybe<ExerciseWhereStageInput>;
@@ -1513,6 +1569,21 @@ export type ExerciseWhereInput = {
   /** All values that are not contained in given list. */
   publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   publishedBy?: InputMaybe<UserWhereInput>;
+  repetition?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than the given value. */
+  repetition_gt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than or equal the given value. */
+  repetition_gte?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are contained in given list. */
+  repetition_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** All values less than the given value. */
+  repetition_lt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values less than or equal the given value. */
+  repetition_lte?: InputMaybe<Scalars['Int']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  repetition_not?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are not contained in given list. */
+  repetition_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
@@ -1532,7 +1603,25 @@ export type ExerciseWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
-  video?: InputMaybe<AssetWhereInput>;
+  videoUrl?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  videoUrl_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  videoUrl_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  videoUrl_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  videoUrl_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  videoUrl_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  videoUrl_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  videoUrl_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  videoUrl_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  videoUrl_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
@@ -5814,11 +5903,11 @@ export type PersonalProjectWhereUniqueInput = {
 
 export type Program = Entity & Node & {
   __typename?: 'Program';
+  category?: Maybe<Scalars['String']['output']>;
   /** The time the document was created */
   createdAt: Scalars['DateTime']['output'];
   /** User that created this document */
   createdBy?: Maybe<User>;
-  description?: Maybe<Scalars['String']['output']>;
   /** Get the document in other stages */
   documentInStages: Array<Program>;
   /** List of Program versions */
@@ -5923,8 +6012,8 @@ export type ProgramConnection = {
 };
 
 export type ProgramCreateInput = {
+  category?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<AssetCreateOneInlineInput>;
   name?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -5964,6 +6053,25 @@ export type ProgramManyWhereInput = {
   OR?: InputMaybe<Array<ProgramWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  category_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  category_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  category_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  category_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  category_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  category_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  category_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  category_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  category_starts_with?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -5980,25 +6088,6 @@ export type ProgramManyWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  description_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  description_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  description_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  description_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  description_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  description_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  description_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  description_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  description_starts_with?: InputMaybe<Scalars['String']['input']>;
   documentInStages_every?: InputMaybe<ProgramWhereStageInput>;
   documentInStages_none?: InputMaybe<ProgramWhereStageInput>;
   documentInStages_some?: InputMaybe<ProgramWhereStageInput>;
@@ -6082,10 +6171,10 @@ export type ProgramManyWhereInput = {
 };
 
 export enum ProgramOrderByInput {
+  CategoryAsc = 'category_ASC',
+  CategoryDesc = 'category_DESC',
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
-  DescriptionAsc = 'description_ASC',
-  DescriptionDesc = 'description_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NameAsc = 'name_ASC',
@@ -6097,7 +6186,7 @@ export enum ProgramOrderByInput {
 }
 
 export type ProgramUpdateInput = {
-  description?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<AssetUpdateOneInlineInput>;
   name?: InputMaybe<Scalars['String']['input']>;
   workouts?: InputMaybe<WorkoutUpdateManyInlineInput>;
@@ -6121,7 +6210,7 @@ export type ProgramUpdateManyInlineInput = {
 };
 
 export type ProgramUpdateManyInput = {
-  description?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -6184,6 +6273,25 @@ export type ProgramWhereInput = {
   OR?: InputMaybe<Array<ProgramWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  category_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  category_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  category_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  category_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  category_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  category_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  category_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  category_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  category_starts_with?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6200,25 +6308,6 @@ export type ProgramWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  description_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  description_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  description_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  description_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  description_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  description_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  description_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  description_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  description_starts_with?: InputMaybe<Scalars['String']['input']>;
   documentInStages_every?: InputMaybe<ProgramWhereStageInput>;
   documentInStages_none?: InputMaybe<ProgramWhereStageInput>;
   documentInStages_some?: InputMaybe<ProgramWhereStageInput>;
@@ -8357,7 +8446,6 @@ export type Workout = Entity & Node & {
   createdAt: Scalars['DateTime']['output'];
   /** User that created this document */
   createdBy?: Maybe<User>;
-  description?: Maybe<Scalars['String']['output']>;
   /** Get the document in other stages */
   documentInStages: Array<Workout>;
   exercises: Array<Exercise>;
@@ -8374,6 +8462,7 @@ export type Workout = Entity & Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
+  type?: Maybe<Scalars['String']['output']>;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime']['output'];
   /** User that last updated this document */
@@ -8464,10 +8553,10 @@ export type WorkoutConnection = {
 export type WorkoutCreateInput = {
   clwue5oob0f1n06waapvkh6z7?: InputMaybe<ProgramCreateManyInlineInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
   exercises?: InputMaybe<ExerciseCreateManyInlineInput>;
   image?: InputMaybe<AssetCreateOneInlineInput>;
   name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -8520,25 +8609,6 @@ export type WorkoutManyWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  description_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  description_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  description_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  description_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  description_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  description_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  description_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  description_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  description_starts_with?: InputMaybe<Scalars['String']['input']>;
   documentInStages_every?: InputMaybe<WorkoutWhereStageInput>;
   documentInStages_none?: InputMaybe<WorkoutWhereStageInput>;
   documentInStages_some?: InputMaybe<WorkoutWhereStageInput>;
@@ -8603,6 +8673,25 @@ export type WorkoutManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  type_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  type_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  type_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  type_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  type_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  type_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  type_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  type_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  type_starts_with?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -8624,24 +8713,24 @@ export type WorkoutManyWhereInput = {
 export enum WorkoutOrderByInput {
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
-  DescriptionAsc = 'description_ASC',
-  DescriptionDesc = 'description_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NameAsc = 'name_ASC',
   NameDesc = 'name_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
+  TypeAsc = 'type_ASC',
+  TypeDesc = 'type_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC'
 }
 
 export type WorkoutUpdateInput = {
   clwue5oob0f1n06waapvkh6z7?: InputMaybe<ProgramUpdateManyInlineInput>;
-  description?: InputMaybe<Scalars['String']['input']>;
   exercises?: InputMaybe<ExerciseUpdateManyInlineInput>;
   image?: InputMaybe<AssetUpdateOneInlineInput>;
   name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type WorkoutUpdateManyInlineInput = {
@@ -8662,8 +8751,8 @@ export type WorkoutUpdateManyInlineInput = {
 };
 
 export type WorkoutUpdateManyInput = {
-  description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type WorkoutUpdateManyWithNestedWhereInput = {
@@ -8741,25 +8830,6 @@ export type WorkoutWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  /** All values containing the given string. */
-  description_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values ending with the given string. */
-  description_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are contained in given list. */
-  description_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Any other value that exists and is not equal to the given value. */
-  description_not?: InputMaybe<Scalars['String']['input']>;
-  /** All values not containing the given string. */
-  description_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** All values not ending with the given string */
-  description_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values that are not contained in given list. */
-  description_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** All values not starting with the given string. */
-  description_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** All values starting with the given string. */
-  description_starts_with?: InputMaybe<Scalars['String']['input']>;
   documentInStages_every?: InputMaybe<WorkoutWhereStageInput>;
   documentInStages_none?: InputMaybe<WorkoutWhereStageInput>;
   documentInStages_some?: InputMaybe<WorkoutWhereStageInput>;
@@ -8824,6 +8894,25 @@ export type WorkoutWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  type_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  type_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  type_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  type_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  type_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  type_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  type_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  type_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  type_starts_with?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -8947,17 +9036,69 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
-export type ExercisesQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProgramQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
 
 
-export type ExercisesQuery = { __typename?: 'Query', exercises: Array<{ __typename?: 'Exercise', id: string, name?: string | null }> };
+export type ProgramQuery = { __typename?: 'Query', program?: { __typename?: 'Program', id: string, name?: string | null, workouts: Array<{ __typename?: 'Workout', name?: string | null, id: string, type?: string | null, image?: { __typename?: 'Asset', url: string } | null }> } | null };
+
+export type ProgramsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const ExercisesDocument = gql`
-    query Exercises {
-  exercises {
+export type ProgramsQuery = { __typename?: 'Query', programs: Array<{ __typename?: 'Program', id: string, name?: string | null, category?: string | null, image?: { __typename?: 'Asset', url: string } | null }> };
+
+export type WorkoutQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type WorkoutQuery = { __typename?: 'Query', workout?: { __typename?: 'Workout', id: string, name?: string | null, type?: string | null, image?: { __typename?: 'Asset', url: string } | null, exercises: Array<{ __typename?: 'Exercise', id: string, name?: string | null, duration?: number | null, repetition?: number | null }> } | null };
+
+
+export const ProgramDocument = gql`
+    query Program($id: ID!) {
+  program(where: {id: $id}) {
+    id
+    workouts {
+      name
+      id
+      type
+      image {
+        url
+      }
+    }
+    name
+  }
+}
+    `;
+export const ProgramsDocument = gql`
+    query Programs {
+  programs {
     id
     name
+    image {
+      url
+    }
+    category
+  }
+}
+    `;
+export const WorkoutDocument = gql`
+    query Workout($id: ID!) {
+  workout(where: {id: $id}) {
+    id
+    name
+    type
+    image {
+      url
+    }
+    exercises {
+      id
+      name
+      duration
+      repetition
+    }
   }
 }
     `;
@@ -8966,11 +9107,19 @@ export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, str
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType, _variables) => action();
-const ExercisesDocumentString = print(ExercisesDocument);
+const ProgramDocumentString = print(ProgramDocument);
+const ProgramsDocumentString = print(ProgramsDocument);
+const WorkoutDocumentString = print(WorkoutDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    Exercises(variables?: ExercisesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ExercisesQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<ExercisesQuery>(ExercisesDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Exercises', 'query', variables);
+    Program(variables: ProgramQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ProgramQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<ProgramQuery>(ProgramDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Program', 'query', variables);
+    },
+    Programs(variables?: ProgramsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ProgramsQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<ProgramsQuery>(ProgramsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Programs', 'query', variables);
+    },
+    Workout(variables: WorkoutQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: WorkoutQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<WorkoutQuery>(WorkoutDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Workout', 'query', variables);
     }
   };
 }

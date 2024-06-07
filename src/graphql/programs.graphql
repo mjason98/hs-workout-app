@@ -1,0 +1,10 @@
+query Programs {
+  programs {
+    id
+    name
+    image {
+      url
+    }
+    category
+  }
+}

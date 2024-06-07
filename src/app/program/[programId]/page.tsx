@@ -1,4 +1,6 @@
-import React from 'react';
+import { sdk } from "@/lib/client";
+import Link from "next/link";
+import { pacifico } from "@/app/fonts/default";
 
 type PlanPageProps = {
   params: {
@@ -6,11 +8,36 @@ type PlanPageProps = {
   };
 };
 
-const ArticlePage: React.FC<PlanPageProps> = ({ params: { programId } }) => {
+const ArticlePage: React.FC<PlanPageProps> = async ({
+  params: { programId },
+}) => {
+  const { data } = await sdk.Program({ id: programId });
+
   return (
-    <main className="flex min-h-screen flex-col gap-10 items-center justify-start p-10">
-      <h1>Plan Page</h1>
-      <p>Plan ID: {programId}</p>
+    <main className="bg-yoga-o flex min-h-screen flex-col gap-10 items-center justify-start p-7">
+      <div
+        className={
+          "text-6xl text-center text-gray-700 leading-relaxed h-fit " +
+          pacifico.className
+        }
+      >
+        {data.program?.name}
+      </div>
+      <div className="flex flex-col items-center justify-start gap-7 p-3 w-full">
+        {data.program?.workouts.map((w) => {
+          return (
+            <Link
+              key={w.id}
+              href={`/program/${programId}/${w.id}`}
+              className="button-with-bg flex flex-col items-center justify-begin min-h-[200px] w-full"
+              style={{ backgroundImage: `url(${w.image?.url})`, borderColor:`rgb(136, 19, 55)` }}
+            >
+              <div className="bg-rose-900 text-rose-50 text-3xl p-4 rounded-xl">{w.name}</div>
+              
+            </Link>
+          );
+        })}
+      </div>
     </main>
   );
 };

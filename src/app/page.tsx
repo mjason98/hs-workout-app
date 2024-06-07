@@ -1,14 +1,7 @@
-// import { sdk } from "@/lib/client";
 import Link from "next/link";
-import { Pacifico } from "next/font/google";
+import { pacifico } from "./fonts/default";
 
-const pacifico = Pacifico({ subsets: ["latin"], weight: "400" });
-
-const Home = async () => {
-  // const {data} = await sdk.Exercises()
-
-  // console.log(data)
-
+const Home = () => {
   return (
     <main className="bg-yoga flex min-h-screen flex-col gap-20 items-center justify-center p-10">
       <div className={"text-8xl text-gray-800 " + pacifico.className}>

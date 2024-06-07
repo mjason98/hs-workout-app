@@ -1,0 +1,14 @@
+query Program ($id: ID!){
+  program(where: {id: $id}) {
+    id
+    workouts {
+      name
+      id
+      type
+      image {
+        url
+      }
+    }
+    name
+  }
+}

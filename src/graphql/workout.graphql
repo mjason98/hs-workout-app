@@ -1,0 +1,16 @@
+query Workout($id: ID!) {
+  workout(where: {id: $id}) {
+    id
+    name
+    type
+    image {
+      url
+    }
+    exercises {
+      id
+      name
+      duration
+      repetition
+    }
+  }
+}

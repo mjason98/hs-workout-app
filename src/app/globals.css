@@ -4,7 +4,7 @@
 
 .bg-yoga {
     position: relative;
-    z-index: 1; /* Ensures the content stays above the pseudo-element */
+    z-index: 1
 }
 
 .bg-yoga::before {
@@ -17,6 +17,64 @@
     background-image: url('/yogabg.jpg');
     background-repeat: repeat;
     background-size: 900px 900px;
-    opacity: 0.1; /* Sets the opacity to 0.8 */
-    z-index: -1; /* Ensures the background image stays behind the content */
+    opacity: 0.1; 
+    z-index: -1; 
+}
+
+.bg-yoga-o {
+    position: relative;
+    z-index: 1;
+    /* overflow: hidden; */
+    /* height: 100vh; */
+}
+
+.bg-yoga-o::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5)), 
+                url('/yogabg.jpg');
+    background-repeat: repeat;
+    background-size: 900px 900px;
+    z-index: -1;
+}
+
+.button-with-bg {
+    position: relative;
+    display: inline-block;
+    font-size: 40px;
+    font-weight: 500;
+    color: #ffffff;
+    border: none;
+    border-bottom: 6px solid rgb(31, 41, 55);
+    border-left: 2px solid rgb(31, 41, 55);
+    border-right: 2px solid rgb(31, 41, 55);
+    background-size: 300px 300px;
+    border-radius: 30px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden; 
+}
+
+.button-with-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit no-repeat center center;
+    background-size: cover;
+    opacity: 0.1;
+    border-radius: 10px; 
+    z-index: -1; 
+}
+
+.h-left {
+    height: calc(100vh - 150px);
 }
