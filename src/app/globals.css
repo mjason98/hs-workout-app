@@ -5,6 +5,7 @@
 .bg-yoga {
     position: relative;
     z-index: 1
+
 }
 
 .bg-yoga::before {
@@ -24,8 +25,6 @@
 .bg-yoga-o {
     position: relative;
     z-index: 1;
-    /* overflow: hidden; */
-    /* height: 100vh; */
 }
 
 .bg-yoga-o::before {
@@ -77,4 +76,8 @@
 
 .h-left {
     height: calc(100vh - 150px);
+}
+
+.h-left-2{
+    height: calc(100vh - 200px);
 }
