@@ -28,7 +28,7 @@ const getTime = (ex:Exercise) => {
 const Carrousel: React.FC<CarrouseProps> = ({ exercises, workoutId }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [timeLeft, setTimeLeft] = useState(getTime(exercises[0]));
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<Slider | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,7 +37,9 @@ const Carrousel: React.FC<CarrouseProps> = ({ exercises, workoutId }) => {
         const prevTimeLeftFixed = prevTimeLeft?prevTimeLeft:0;
         if (prevTimeLeftFixed <= 1) {
           if (currentSlide < exercises.length - 1) {
-            sliderRef.current.slickGoTo(currentSlide+1);
+            if (sliderRef.current) {
+              sliderRef.current.slickGoTo(currentSlide + 1);
+            }
             setCurrentSlide(currentSlide+1);
           } else {
             // finish
@@ -51,7 +53,7 @@ const Carrousel: React.FC<CarrouseProps> = ({ exercises, workoutId }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [currentSlide, exercises]);
+  },);
 
 
   const settings = {
